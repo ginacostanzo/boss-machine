@@ -12,7 +12,7 @@ meetingsRouter.get('/', (req, res, next) => {
   
 });
 
-ideasRouter.post('/', (req, res, next) => {
+meetingsRouter.post('/', (req, res, next) => {
     const newMeeting = db.createMeeting();
     const addedMeeting = db.addToDatabase('meetings', newMeeting);
     if (addedMeeting) {
@@ -22,14 +22,10 @@ ideasRouter.post('/', (req, res, next) => {
     }
 });
 
-ideasRouter.delete('/:meetingId', (req, res, next) => {
-    const deletedMeeting = db.deleteFromDatabasebyId('meetings', req.params.meetingId);
-    if (deletedMeeting) {
-        res.send();
-    } else {
-        res.status(500).send('Meeting deletion failed.');
-    }
-})
+meetingsRouter.delete('/', (req, res, next) => {
+    const deleted = db.deleteAllFromDatabase('meetings');
+    res.status(204).send();
+});
 
 
 module.exports = meetingsRouter;

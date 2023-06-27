@@ -13,7 +13,7 @@ ideasRouter.get('/', (req, res, next) => {
   
 });
 
-ideasRouter.post('/', (req, res, next) => {
+ideasRouter.post('/', checkMillionDollarIdea, (req, res, next) => {
     const newIdea = req.body;
     const addedIdea = db.addToDatabase('ideas', newIdea);
     if (addedIdea) {
@@ -23,7 +23,7 @@ ideasRouter.post('/', (req, res, next) => {
     }
 });
 
-ideasRouter.param('ideasId', (req, res, next, id) => {
+ideasRouter.param('ideaId', (req, res, next, id) => {
     const foundIdea = db.getFromDatabaseById('ideas', id);
     if (!foundIdea) {
         res.status(404).send({error: 'idea not found'})
@@ -49,9 +49,9 @@ ideasRouter.put('/:ideaId', checkMillionDollarIdea, (req, res, next) => {
 ideasRouter.delete('/:ideaId', (req, res, next) => {
     const deletedIdea = db.deleteFromDatabasebyId('ideas', req.foundIdea.id);
     if (deletedIdea) {
-        res.send('Idea deleted successfully.');
+        res.status(204).send();
     } else {
-        res.status(500).send('Idea deletion failed.');
+        res.status(404).send('Idea deletion failed.');
     }
 })
 
