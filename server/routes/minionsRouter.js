@@ -37,6 +37,7 @@ minionsRouter.put('/:minionId', (req, res, next) => {
         selectedMinion.name = req.body.name;
         selectedMinion.title = req.body.title;
         selectedMinion.weaknesses = req.body.weaknesses;
+        selectedMinion.salary = req.body.salary;
         const updatedMinion = db.updateInstanceInDatabase('minions', selectedMinion);
         if (updatedMinion) {
             res.send(updatedMinion);
